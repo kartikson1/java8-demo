@@ -1,0 +1,63 @@
+import org.junit.Test;
+import java.time.LocalDate;
+import java.util.List;
+import static org.junit.Assert.*;
+
+public class EmployeeManagementSystemTest {
+
+    @Test
+    public void testAddEmployee() {
+        EmployeeManagementSystem ems = new EmployeeManagementSystem();
+        Employee employee = new Employee("Kartik Soni", "Software", LocalDate.parse("2000-09-22"), 50000.00);
+        ems.addEmployee(employee);
+        assertEquals(1, ems.getEmployees().size());
+    }
+
+    @Test
+    public void testGetEmployeesByDepartment() {
+        EmployeeManagementSystem ems = new EmployeeManagementSystem();
+        ems.addEmployee(new Employee("Kartik Soni", "Software", LocalDate.parse("2000-09-22"), 50000.00));
+        ems.addEmployee(new Employee("Jane Smith", "Marketing", LocalDate.parse("1990-01-01"), 60000.00));
+        List<Employee> employees = ems.getEmployeesByDepartment("Software");
+        assertEquals(1, employees.size());
+        assertEquals("Kartik Soni", employees.get(0).getName());
+    }
+
+    @Test
+    public void testGetAverageSalary() {
+        EmployeeManagementSystem ems = new EmployeeManagementSystem();
+        ems.addEmployee(new Employee("Kartik Soni", "Software", LocalDate.parse("2000-09-22"), 50000.00));
+        ems.addEmployee(new Employee("Jane Smith", "Marketing", LocalDate.parse("1990-01-01"), 60000.00));
+        double averageSalary = ems.getAverageSalary();
+        assertEquals(55000.00, averageSalary, 0.001);
+    }
+
+    @Test
+    public void testGetEmployeeWithMaxSalary() {
+        EmployeeManagementSystem ems = new EmployeeManagementSystem();
+        ems.addEmployee(new Employee("Kartik Soni", "Software", LocalDate.parse("2000-09-22"), 50000.00));
+        ems.addEmployee(new Employee("Jane Smith", "Marketing", LocalDate.parse("1990-01-01"), 60000.00));
+        Employee maxSalaryEmployee = ems.getEmployeeWithMaxSalary();
+        assertEquals("Jane Smith", maxSalaryEmployee.getName());
+    }
+
+    @Test
+    public void testGetEmployeesByAge() {
+        EmployeeManagementSystem ems = new EmployeeManagementSystem();
+        ems.addEmployee(new Employee("Kartik Soni", "Software", LocalDate.parse("2000-09-22"), 50000.00));
+        ems.addEmployee(new Employee("Jane Smith", "Marketing", LocalDate.parse("1990-01-01"), 60000.00));
+        List<Employee> employees = ems.getEmployeesByAge(33);
+        assertEquals(1, employees.size());
+        assertEquals("Jane Smith", employees.get(0).getName());
+    }
+
+    @Test
+    public void testGiveRaise() {
+        EmployeeManagementSystem ems = new EmployeeManagementSystem();
+        ems.addEmployee(new Employee("Kartik Soni", "Software", LocalDate.parse("2000-09-22"), 50000.00));
+        ems.addEmployee(new Employee("Jane Smith", "Marketing", LocalDate.parse("1990-01-01"), 60000.00));
+        ems.giveRaise(10.00);
+        assertEquals(55000.00, ems.getEmployees().get(0).getSalary(), 0.001);
+        assertEquals(66000.00, ems.getEmployees().get(1).getSalary(), 0.001);
+    }
+}
