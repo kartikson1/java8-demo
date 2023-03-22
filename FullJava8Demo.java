@@ -18,16 +18,16 @@ public class EmployeeManagementSystem {
     }
 
     public List<Employee> getEmployeesByDepartment(String department) {
-        return employees.stream()
+        return employees.stream() // Stream API
                 .filter(e -> e.getDepartment().equals(department))
                 .toList();
     }
 
     public double getAverageSalary() {
         return employees.stream()
-                .mapToDouble(Employee::getSalary) //Method reference
+                .mapToDouble(Employee::getSalary) // Method reference
                 .average()
-                .orElse(0);
+                .orElse(0); // Optional
     }
 
     public Employee getEmployeeWithMaxSalary() {
@@ -37,11 +37,11 @@ public class EmployeeManagementSystem {
     }
 
     public List<Employee> getEmployeesByAge(int age) {
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(); // New Date API
         LocalDate birthDate = today.minusYears(age);
 
         return employees.stream()
-                .filter(e -> e.getBirthDate().isBefore(birthDate))
+                .filter(e -> e.getBirthDate().isBefore(birthDate)) // Lambda expression
                 .toList();
     }
 
